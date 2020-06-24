@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--mysql 连接数据库jar 这里选择自己本地位置;
+    如果不知道maven本地仓库地址，可以使用EveryThing工具全局搜索mysql-connector-java，找到jar包位置；
+    也可以手动下载一个jar放在指定位置，进行引用。
+    -->
+    <!--    <classPathEntry location="E:/mvnRespo/mysql/mysql-connector-java/5.1.47/mysql-connector-java-5.1.47.jar"/>-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <!--数据库连接地址、账号、密码 -->
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/miaosha"
+                        userId="root"
+                        password="123456789">
+        </jdbcConnection>
+
+        <!-- 生成DataObject类存放的位置-->
+
+             <!--targetPackage：生成的类要放的包，真实的包受enableSubPackages属性控制；
+             targetProject：目标项目，指定一个存在的目录下，生成的内容会放到指定目录中，如果目录不存在，MBG不会自动建目录
+             -->
+        <javaModelGenerator targetPackage="com.miaoshaproject.dataobject" targetProject="src/main/java">
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false；如果多个数据库改为true分目录 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--  生成映射文件存放的位置-->
+
+              <!--targetPackage、targetProject同javaModelGenerator中作用一样 -->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成Dao类的存放位置-->
+
+             <!--客户端代码，生成易于使用的针对object对象和xml配置文件的代码
+             type="ANNOTATEDMAPPER",生成java model和基于注解的mapper对象
+             type="MIXEDMAPPER",生成基于注解的java model和想对象的Mapper对象
+             type="XMLMAPPER"，生成SQLMap XML文件和独立的Mapper接口
+
+             targetPackage、targetProject同javaModelGenerator中作用一样
+             -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.miaoshaproject.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--生成对应的表及类名-->
+
+             <!--domainObjectName：生成的domain类的名字,当表名和domain类的名字有差异时一定要设置，如果不设置，直接使用表名作为domain类的名字；
+             可以设置为somepck.domainName，那么会自动把domainName类再放到somepck包里面；
+             UserDO即UserDataObject
+             设置几个false，在MBG生成xml配置文件的时候，不会生成collection的复杂查询语句，然后手动删除object中的example
+             -->
+        <!--
+        <table tableName="user_info" domainObjectName="UserDO" enableCountByExample="false"
+                enableUpdateByExample="false" enableDeleteByExample="false"
+                enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="user_password" domainObjectName="UserPasswordDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="item" domainObjectName="ItemDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="item_stock" domainObjectName="ItemStockDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+
+
+        <table tableName="order_info" domainObjectName="OrderDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+
+        <table tableName="sequence_info" domainObjectName="SequenceDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="promo" domainObjectName="PromoDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        -->
+
+        <table tableName="stock_log" domainObjectName="StockLogDO" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"></table>
+    </context>
+</generatorConfiguration>
